@@ -1,0 +1,10 @@
+{
+  "name": "portfolio-website",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix Client run dev -- --host 0.0.0.0",
+    "build": "npm --prefix Client run build",
+    "lint": "npm --prefix Client run lint",
+    "preview": "npm --prefix Client run preview -- --host 0.0.0.0"
+  }
+}
