@@ -1,119 +1,66 @@
+import { profile, stats, links } from '../info'
+import { useInView, useCountUp, useMagnet } from '../lib'
+import './Hero.css'
 
-function Hero() {
+function Stat({ number, suffix, label, run, index }) {
+  const n = useCountUp(number, run)
   return (
-    <section className="hero container" id="home" data-reveal>
-      <div className="hero-content">
-        <p className="intro">Hello, I&apos;m Miroszlava</p>
-
-        <h1>
-          <span className="title-line">I build</span>
-          <span className="title-line title-line-strong">digital spaces</span>
-          <span className="title-line">that feel alive.</span>
-        </h1>
-
-        <p className="hero-description">
-          I&apos;m a frontend developer who creates beautiful, responsive and
-          user-friendly websites using React, JavaScript and modern web
-          technologies.
-        </p>
-
-        <div className="hero-actions">
-          <a className="primary-button" href="#projects">
-            View my projects
-            <span aria-hidden="true">↗</span>
-          </a>
-          <a className="secondary-button" href="#contact">
-            Contact me
-          </a>
-        </div>
-
-        <div className="social-links">
-          <span>Find me online</span>
-
-          <div>
-            <a
-              href="https://github.com/mirrosyaa"
-              target="_blank"
-              rel="noreferrer"
-            >
-              GitHub
-            </a>
-
-            <a
-              href="https://linkedin.com/in/myr3"
-              target="_blank"
-              rel="noreferrer"
-            >
-              LinkedIn
-            </a>
-          </div>
-        </div>
-
-        <div className="statistics">
-          <article>
-            <strong>05+</strong>
-            <span>Projects built</span>
-          </article>
-
-          <article>
-            <strong>01+</strong>
-            <span>Years learning</span>
-          </article>
-
-          <article>
-            <strong>100%</strong>
-            <span>Passion for code</span>
-          </article>
-        </div>
-      </div>
-
-      <div className="hero-space" aria-hidden="true">
-  <div className="space-scene">
-
-    {/* Stars */}
-    <div className="star-field" />
-
-    {/* Soft glow behind everything */}
-    <div className="space-glow" />
-
-    {/* Central star */}
-    <div className="space-sun">
-      <div className="sun-core" />
-      <div className="sun-glow" />
+    <div className="stat" style={{ '--i': index }}>
+      <b>
+        {n}
+        {suffix}
+      </b>
+      <i className="stat-bar" />
+      <span>{label}</span>
     </div>
-
-    {/* Orbit 1 */}
-    <div className="space-orbit space-orbit-one">
-      <div className="orbit-runner orbit-runner-one">
-        <span className="planet planet-one" />
-      </div>
-    </div>
-
-    {/* Orbit 2 */}
-    <div className="space-orbit space-orbit-two">
-      <div className="orbit-runner orbit-runner-two">
-        <span className="planet planet-two">
-          <span className="planet-ring" />
-        </span>
-      </div>
-    </div>
-
-    {/* Orbit 3 */}
-    <div className="space-orbit space-orbit-three">
-      <div className="orbit-runner orbit-runner-three">
-        <span className="planet planet-three" />
-      </div>
-    </div>
-
-    {/* Comet */}
-    <div className="comet">
-      <span />
-    </div>
-
-  </div>
-</div>
-    </section>
-  );
+  )
 }
 
-export default Hero;
+const go = (id) =>
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+
+export default function Hero() {
+  const [ref, inView] = useInView(0.25)
+  const magnet = useMagnet(0.2)
+
+  return (
+    <section
+      id="home"
+      ref={ref}
+      className={inView ? 'hero appear in' : 'hero appear'}
+    >
+      <div className="hero-text">
+        <p className="kicker">
+          {profile.role} <span>·</span> {profile.location}
+        </p>
+
+        <h1>
+          Hi, I&apos;m <span className="accent">{profile.name}</span>
+        </h1>
+
+        <p className="lead">{profile.lead}</p>
+        <p className="sub">{profile.now}</p>
+
+        <div className="cta">
+          <button ref={magnet} className="btn primary" onClick={() => go('work')}>
+            See what I&apos;ve built
+          </button>
+          <a
+            className="btn ghost"
+            href={links.github}
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub
+          </a>
+        </div>
+
+        <div className="stats">
+          {stats.map((s, i) => (
+            <Stat key={s.label} {...s} run={inView} index={i} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

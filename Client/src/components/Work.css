@@ -1,0 +1,68 @@
+/* flex + centre so a short last row sits under the middle of the row above */
+.work-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 22px;
+}
+
+.work-card {
+  flex: 1 1 320px;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 26px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.work-card > * {
+  position: relative;
+}
+
+.work-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--line-bright);
+}
+
+.work-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.work-head h3 {
+  font-size: 1.25rem;
+}
+
+.work-head a {
+  color: var(--sky-soft);
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.work-head a:hover {
+  color: var(--sky);
+}
+
+.work-card p {
+  flex: 1;
+  color: var(--dim);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  font-size: 0.78rem;
+  padding: 5px 11px;
+  border-radius: 999px;
+  color: var(--sky-soft);
+  background: rgba(53, 192, 255, 0.1);
+  border: 1px solid rgba(53, 192, 255, 0.18);
+}
